@@ -1,8 +1,16 @@
 <div class="row">
   <div class="col-8">
     <div class="card">
+      <p>{{clientObj | json}}</p><!--displaying object "clientObj" using Json pipe-->
+      <ul>
+        @for (item of userList$ | async; track $index){ <!--displaying data from an observable "userList$" using Async pipe-->
+        <ul>
+          <li> {{item.username}}</li>
+        }
+      </ul>
+      <div>Client {{firstName()}}</div> <!--calling the signal -->
       <div class="card-header bg-success">
-        Client List
+        Client List {{currentDate | date : 'dd/mm/yy'}}<!--Date pipe-->
       </div>
       <div class="card-body">
         <div class="row">
@@ -22,7 +30,7 @@
                 @for(item of clientList; track $index){
                   <tr>
                     <td>{{$index +1}}</td>
-                    <td>{{item.companyName}}</td>
+                    <td>{{item.companyName | lowercase}}</td><!--LowerCasePipe-->
                     <td>{{item.contactPersonName}}</td>
                     <td>{{item.contactNo}}</td>
                     <td>{{item.city}}</td>

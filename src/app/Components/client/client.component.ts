@@ -1,28 +1,35 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit, signal } from '@angular/core';
 import { Client } from '../../model/Client';
 import { FormsModule } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
 import { APIResponseModel } from '../../model/interface/role';
 import { inject } from '@angular/core/testing';
+import { AsyncPipe, DatePipe, JsonPipe, LowerCasePipe, UpperCasePipe } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-client',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, LowerCasePipe, DatePipe, JsonPipe, AsyncPipe],
   templateUrl: './client.component.html',
   styleUrl: './client.component.css'
 })
 export class ClientComponent implements OnInit {
+  currentDate : Date= new Date();
   
 clientObj: Client = new Client();
 clientList: Client[]=[];
 
-
+firstName= signal("Angular")
+  
 // Constructor injection
 constructor(private clientService: ClientService) {}
 
+userList$: Observable<any> = new Observable<any>;
+
 ngOnInit(): void {
   this.loadClient();
+  this.userList$ = this.clientService.getAllUser();
 }
 
 loadClient(){

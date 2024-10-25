@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-8">
     <div class="card">
+      
       <div class="card-header bg-success">
         Client List
       </div>
@@ -54,6 +55,17 @@
                   formControlName="projectName"
                   class="form-control"
                 />
+                @if (projectForm.controls['projectName'].touched){
+                <div class="text-danger">
+                  @if (projectForm.controls['projectName'].errors?.['required']){
+                    <span>This is Required</span>
+                  }
+                  @if (projectForm.controls['projectName'].errors?.['minLength']){
+                    <span>Min 3 letters/</span>
+                  }
+               
+                </div>
+              }
               </div>
               <div class="col-6">
                 <label for="">Start Date</label>
@@ -138,7 +150,7 @@
                   >
                   }
                 </select>
-                {{employeeList | json}}
+             <!--   {{employeeList | json}}-->
               </div>
             </div>
 
@@ -147,9 +159,10 @@
                 <button class="btn btn-secondary">Reset</button>
               </div>
               <div class="col-6 text-center">
-                <button class="btn btn-success" (click)="onSaveProject()">
+                <button class="btn btn-success" [disabled]="projectForm.invalid"  (click)="onSaveProject()">
                   Save Project
                 </button>
+
               </div>
             </div>
           </form>

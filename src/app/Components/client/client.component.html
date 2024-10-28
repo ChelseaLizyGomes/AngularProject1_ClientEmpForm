@@ -1,3 +1,4 @@
+<app-alert [alertType]="'Client Error'" [message]="'Try again after sometime'"></app-alert>
 <div class="row">
   <div class="col-8">
     <div class="card">
@@ -6,9 +7,10 @@
         @for (item of userList$ | async; track $index){ <!--displaying data from an observable "userList$" using Async pipe-->
         <ul>
           <li> {{item.username}}</li>
-        }
-      </ul>
-      <div>Client {{firstName()}}</div> <!--calling the signal -->
+        </ul>  }
+     
+      <div>Client {{firstName()}} <button class="btn-danger" (click)="changeFName()">Change Name</button></div> <!--calling the signal -->
+
       <div class="card-header bg-success">
         Client List {{currentDate | date : 'dd/mm/yy'}}<!--Date pipe-->
       </div>
@@ -46,7 +48,6 @@
           </div>
         </div>
       </div>
-    </div>
     <div class="col-4">
       <div class="card">
         <div class="card-header bg-success">
@@ -116,8 +117,10 @@
                   <button class="btn btn-secondary">Reset</button>
               </div>
               <div class="col-6 text-center">
-              <button class="btn btn-success" (click)="onSaveClient()" [disabled]="!form.valid">
-                {{clientObj.clientId !=0 ? 'Update Client': 'Save Client'}}</button>
+<!--Reusable button with property binding-->
+<app-mybutton (onBtnClicked)="onSaveClient()" [btnClass]="'btn btn-success'" [btnText]="clientObj.clientId !=0 ? 'Update Client': 'Save Client'"></app-mybutton>
+            <!--  <button class="btn btn-success" (click)="onSaveClient()" [disabled]="!form.valid">
+                {{clientObj.clientId !=0 ? 'Update Client': 'Save Client'}}</button>-->
               </div>
           </div>
           </form>
@@ -125,5 +128,5 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
+ 
+
